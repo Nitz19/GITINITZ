@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sort Computer Parts</title>
+</head>
+<body>
+    <h1>Sort Computer Parts</h1>
+    <button onclick="sortComputerParts()">Sort Parts</button>
+    <div id="output"></div>
+
+    <script>
+        // Merge Sort Algorithm for sorting computer parts
+        function mergeSortComputerParts(parts) {
+            if (parts.length <= 1) {
+                return parts;
+            }
+
+            const mid = Math.floor(parts.length / 2);
+            const left = parts.slice(0, mid);
+            const right = parts.slice(mid);
+
+            return merge(mergeSortComputerParts(left), mergeSortComputerParts(right));
+        }
+
+        function merge(left, right) {
+            let result = [];
+            let leftIndex = 0;
+            let rightIndex = 0;
+
+            while (leftIndex < left.length && rightIndex < right.length) {
+                if (left[leftIndex].name < right[rightIndex].name) {
+                    result.push(left[leftIndex]);
+                    leftIndex++;
+                } else {
+                    result.push(right[rightIndex]);
+                    rightIndex++;
+                }
+            }
+
+            return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+        }
+
+        // Main function to sort and display computer parts
+        function sortComputerParts() {
+            const computerParts = [
+                { name: "CPU", description: "Central Processing Unit" },
+                { name: "GPU", description: "Graphics Processing Unit" },
+                { name: "RAM", description: "Random Access Memory" },
+                { name: "SSD", description: "Solid State Drive" },
+                { name: "HDD", description: "Hard Disk Drive" },
+                // Add more computer parts here...
+                { name: "Motherboard", description: "Main Circuit Board" },
+                { name: "Power Supply", description: "Provides Electrical Power" },
+                { name: "Cooling Fan", description: "Keeps Components Cool" },
+                { name: "Monitor", description: "Display Screen" },
+                { name: "Keyboard", description: "Input Device" },
+                { name: "Mouse", description: "Pointing Device" },
+                { name: "Graphics Card", description: "Enhances Graphics" },
+                { name: "Sound Card", description: "Audio Processing" },
+                { name: "Network Card", description: "Network Connectivity" },
+                { name: "Optical Drive", description: "CD/DVD/Blu-ray" },
+                { name: "Case", description: "Enclosure for Components" },
+                { name: "Power Cable", description: "Electrical Connection" },
+                { name: "VGA Cable", description: "Video Connection" },
+                { name: "Webcam", description: "Video Capture" },
+                { name: "Speakers", description: "Audio Output" },
+                { name: "Microphone", description: "Audio Input" },
+                { name: "Router", description: "Network Device" },
+                { name: "External Hard Drive", description: "Storage" },
+                { name: "USB Flash Drive", description: "Portable Storage" },
+                { name: "Monitor Stand", description: "Support for Monitor" },
+            ];
+
+            const sortedParts = mergeSortComputerParts(computerParts);
+
+            const outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = "<h2>Sorted Computer Parts:</h2>";
+
+            sortedParts.forEach(function (part) {
+                outputDiv.innerHTML += `${part.name}: ${part.description}<br>`;
+            });
+        }
+    </script>
+</body>
+</html>
